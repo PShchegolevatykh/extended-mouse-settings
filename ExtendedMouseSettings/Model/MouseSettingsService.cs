@@ -33,9 +33,10 @@ namespace ExtendedMouseSettings.Model
 
         private void SetForAllUsers(int val)
         {
-            var currentKey = Registry.Users.OpenSubKey("Control Panel", true);
-            currentKey = currentKey?.OpenSubKey("Mouse", true);
-            currentKey?.SetValue("MouseSensitivity", val.ToString());
+            var defaultSubKey = Registry.Users.OpenSubKey(".DEFAULT", true); // requires admin access rights
+            var controlPanelKey = defaultSubKey?.OpenSubKey("Control Panel", true);
+            controlPanelKey = controlPanelKey?.OpenSubKey("Mouse", true);
+            controlPanelKey?.SetValue("MouseSensitivity", val.ToString());
         }
 
         private static void SetForCurrentUser(int val)
